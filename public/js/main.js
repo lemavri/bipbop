@@ -21,7 +21,7 @@ $(function() {
 
     $.ajax({
       url: '/api/balance/' + bipNumber.val(),
-    }).done(function(res) {
+    }).always(function(res) {
       handleResponse(res);
       toggleWaiting();
       submit.prop('disabled', false);

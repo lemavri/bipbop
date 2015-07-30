@@ -17,13 +17,16 @@ app.get('/api/balance/:number', function(req, res) {
     var $ = cheerio.load(body),
         regex = /^\$[0-9]*/;
 
-    var balance = $('td').filter(function() {
+    var balanceContainer = $('td').filter(function() {
       return regex.test($.text([this]));
     });
 
-    var responseObj = { balance: balance.html() };
+    var balance = balanceContainer.html(),
+        statusCode = balance ? 200 : 404;
 
-    res.json(responseObj);
+    var responseObj = { balance: balance };
+
+    res.status(statusCode).json(responseObj);
   });
 });
 
