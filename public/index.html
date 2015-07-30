@@ -34,13 +34,6 @@
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-        aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
         <a class="navbar-brand" href="#">Bipbop!</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
@@ -54,11 +47,14 @@
     <div class="container">
       <h1>Saldo Bip!</h1>
       <p>Ingresa el número de tu tarjeta Bip! para obtener su saldo.</p>
-      <form class="form" role="form">
+      <div id="alert"></div>
+      <form id="form" class="form" role="form">
         <div class="form-group">
-          <input type="text" placeholder="Número de tarjeta Bip!" class="form-control">
+          <input id="bip-number" type="text" placeholder="Número de tarjeta Bip!" class="form-control">
         </div>
-        <button type="submit" class="btn btn-success">Envíar</button>
+        <button id="submit" type="submit" class="btn btn-success">
+          <span id="loading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span id="loading-text"> Cargando...</span>
+          <span id="submit-text">Envíar</span></button>
       </form>
     </div>
   </div>
@@ -89,7 +85,7 @@
         <h2>End-point</h2>
         <p>Para consumir el end-point solo basta enviar un request <code>GET</code> que incluya el número de la tarjeta Bip!, como se indica a continuación:</p>
         <p>
-          <pre>curl http://localhost:8080/api/balance/1234</pre>
+          <pre>curl https://bipbop.herokuapp.com/api/balance/1234</pre>
         </p>
       </div>
     </div>
