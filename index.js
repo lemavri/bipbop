@@ -3,21 +3,31 @@ var express = require('express'),
     cheerio = require('cheerio'),
     app = express();
 
-app.get('/scrape', function(req, res) {
-  var url = 'http://pocae.tstgo.cl/PortalCAE-WAR-MODULE/SesionPortalServlet?accion=6&NumDistribuidor=99&NomUsuario=usuInternet&NomHost=AFT&NomDominio=aft.cl&RutUsuario=0&Trx=&bloqueable=&NumTarjeta=';
+app.use(express.static('public'));
 
-  //url += '14679088';
+app.get('/api/balance/:number', function(req, res) {
 
-  url += req.query.tarjeta;
+  var protocol = 'http://',
+      url = 'pocae.tstgo.cl/PortalCAE-WAR-MODULE/SesionPortalServlet',
+      params = '?accion=6&NumDistribuidor=99&NomUsuario=usuInternet&NomHost=AFT&NomDominio=aft.cl&RutUsuario=0&Trx=&bloqueable=&NumTarjeta=';
+      remoteHost = [protocol, url, params, req.params.number].join('');
 
-  request.post(url, function(err, resp, body) {
-    var $ = cheerio.load(body);
-    var regex = /^\$[0-9]*/;
+  request.post(remoteHost, function(err, response, body) {
+    var $ = cheerio.load(body),
+        regex = /^\$[0-9]*/;
+
     var balance = $('td').filter(function() {
       return regex.test($.text([this]));
     });
-    res.send(balance.html());
+
+    var responseObj = { balance: balance.html() };
+
+    res.json(responseObj);
   });
+});
+
+app.get('/', function(req, res) {
+  res.render('index');
 });
 
 app.listen('8080');
