@@ -1,4 +1,8 @@
 # bipbop
+Small express app to get the balance of [bip!](http://www.tarjetabip.cl/) cards.
+
+## Demo
+http://bipbop.herokuapp.com/
 
 ## Installing
 
